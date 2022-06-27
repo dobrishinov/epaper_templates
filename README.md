@@ -7,8 +7,8 @@ Template-oriented driver for e-paper displays using Arduino.  Define a layout wi
 2. Fixed the VSPI SPI pins.
 3. define ENABLE_GxEPD2_GFX 1
 
-###TODO LIST
- - ####Write more information which version of NPM and NVM we need ...
+### TODO LIST
+ - #### Write more information which version of NPM and NVM we need ...
   
   nvm: '1.1.9',
   
@@ -29,8 +29,8 @@ Template-oriented driver for e-paper displays using Arduino.  Define a layout wi
   v8: '6.8.275.32-node.55',
   zlib: '1.2.11'
   
- - ####We need to check the GxEPD2_BW.h file for -> #define ENABLE_GxEPD2_GFX 1 (default is 0)
- - ####If we have building problems with:
+ - #### We need to check the GxEPD2_BW.h file for -> #define ENABLE_GxEPD2_GFX 1 (default is 0)
+ - #### If we have building problems with:
  
  Error: sass-loader requires node-sass >=4 but node-sass is already at v4
  
@@ -39,7 +39,7 @@ Template-oriented driver for e-paper displays using Arduino.  Define a layout wi
 - Remove node-sass from your project's node_modules dir
 - Do npm install to reinstall node-sass
  
- - ####Useful links:
+ - #### Useful links:
  https://www.sitepoint.com/quick-tip-multiple-versions-node-nvm/
  https://github.com/sidoh/webpack_with_platformio
 
