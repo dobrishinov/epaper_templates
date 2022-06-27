@@ -46,7 +46,7 @@ Template-oriented driver for e-paper displays using Arduino.  Define a layout wi
 
 ------------
 
-#Information
+# Information
  
 <!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=2 orderedList=false} -->
 
