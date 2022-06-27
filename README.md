@@ -2,6 +2,52 @@
 
 Template-oriented driver for e-paper displays using Arduino.  Define a layout with a JSON template, and update the display by changing variables via a REST API or MQTT.
 
+## Changes in my fork
+1. Fix for Waveshare 7.5 inch BW screen. 
+2. Fixed the VSPI SPI pins.
+3. define ENABLE_GxEPD2_GFX 1
+
+###TODO LIST
+ - ####Write more information which version of NPM and NVM we need ...
+  
+  nvm: '1.1.9',
+  
+  npm: '6.13.4',
+  ares: '1.15.0',
+  brotli: '1.0.7',
+  cldr: '35.1',
+  http_parser: '2.9.3',
+  icu: '64.2',
+  modules: '64',
+  napi: '5',
+  nghttp2: '1.39.2',
+  node: '10.19.0',
+  openssl: '1.1.1d',
+  tz: '2019c',
+  unicode: '12.1',
+  uv: '1.28.0',
+  v8: '6.8.275.32-node.55',
+  zlib: '1.2.11'
+  
+ - ####We need to check the GxEPD2_BW.h file for -> #define ENABLE_GxEPD2_GFX 1 (default is 0)
+ - ####If we have building problems with:
+ 
+ Error: sass-loader requires node-sass >=4 but node-sass is already at v4
+ 
+ This solution:
+- Remove the node-sass from global npm-cache (For Windows users %userprofile%\AppData\Roaming\npm-cache)
+- Remove node-sass from your project's node_modules dir
+- Do npm install to reinstall node-sass
+ 
+ - ####Useful links:
+ https://www.sitepoint.com/quick-tip-multiple-versions-node-nvm/
+ https://github.com/sidoh/webpack_with_platformio
+
+
+------------
+
+#Information
+ 
 <!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=2 orderedList=false} -->
 
 <!-- code_chunk_output -->

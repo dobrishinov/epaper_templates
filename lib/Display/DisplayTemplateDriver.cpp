@@ -24,13 +24,13 @@ DisplayTemplateDriver::DisplayTemplateDriver(
 }
 
 void DisplayTemplateDriver::init() {
-  display->init(115200);
+  display->init(115200, true, 2, false);
   display->mirror(false);
 
   #if defined(ESP32)
   if (settings.hardware.spi_bus == VSPI){
     SPI.end();
-    SPI.begin(18, 23, 19, settings.hardware.getSsPin());
+    SPI.begin(18, 19, 23, settings.hardware.getSsPin());
   } else if (settings.hardware.spi_bus == HardwareSettings::WAVESHARE_SPI) {
     SPI.end();
     SPI.begin(13, 12, 14, settings.hardware.getSsPin());
