@@ -3,50 +3,78 @@
 Template-oriented driver for e-paper displays using Arduino.  Define a layout with a JSON template, and update the display by changing variables via a REST API or MQTT.
 
 ## Changes in my fork
-1. Fix for Waveshare 7.5 inch BW screen. 
-2. Fixed the VSPI SPI pins.
-3. define ENABLE_GxEPD2_GFX 1
-
-### TODO LIST
- - #### Write more information which version of NPM and NVM we need ...
+ :heavy_check_mark: Create Fork of epaper_templates. :heart:  
+   
+ :heavy_check_mark:	Build successfully the project.  
+   
+ :heavy_check_mark:	Provide more information how to build the project.  
+   
+ :heavy_check_mark:	Fix Waveshare 7.5 inch BW screen support.   
+   
+ :heavy_check_mark:	Fix the VSPI SPI pins mapping.  
+ 
+## :exclamation: IMPORTANT things which we need to keep in mind before trying to build the project (also in the original repo)
+ - We need to setup NVM first (Link with more info: https://www.sitepoint.com/quick-tip-multiple-versions-node-nvm/)
+ - I used NVM version '1.1.9' as a package control system for NPM.
+ - I built the project successfully only with Node JS (NPM) version 10.19.0. Maybe will work with 12 or 14 version also. (Not tested)
+  ```
+  Versions for references
   
-  nvm: '1.1.9',
+  nvm: '1.1.9'
   
-  npm: '6.13.4',
-  ares: '1.15.0',
-  brotli: '1.0.7',
-  cldr: '35.1',
-  http_parser: '2.9.3',
-  icu: '64.2',
-  modules: '64',
-  napi: '5',
-  nghttp2: '1.39.2',
-  node: '10.19.0',
-  openssl: '1.1.1d',
-  tz: '2019c',
-  unicode: '12.1',
-  uv: '1.28.0',
-  v8: '6.8.275.32-node.55',
+  npm: '6.13.4'
+  ares: '1.15.0'
+  brotli: '1.0.7'
+  cldr: '35.1'
+  http_parser: '2.9.3'
+  icu: '64.2'
+  modules: '64'
+  napi: '5'
+  nghttp2: '1.39.2'
+  node: '10.19.0'
+  openssl: '1.1.1d'
+  tz: '2019c'
+  unicode: '12.1'
+  uv: '1.28.0'
+  v8: '6.8.275.32-node.55'
   zlib: '1.2.11'
-  
- - #### We need to check the GxEPD2_BW.h file for -> #define ENABLE_GxEPD2_GFX 1 (default is 0)
- - #### If we have building problems with:
+  ```
+ - :exclamation: **IMPORTANT** When we build the project with `pio run` or before that, we **MUST** need to open the `\epaper_templates\.pio\libdeps\esp32\GxEPD2\src\GxEPD2_BW.h` and find the line `#define ENABLE_GxEPD2_GFX 0`.  
+Change it with `define ENABLE_GxEPD2_GFX 1`.  
+We need this because Waveshare 7.5inch BW screen is not showing anything if GxEPD2_GFX is not enabled.
+ - If we have building problems like: `Error: sass-loader requires node-sass >=4 but node-sass is already at v4`  
+ **[Solution will be:](https://github.com/webpack-contrib/sass-loader/issues/563)**
+   ```
+   - Remove the node-sass from global npm-cache (For Windows users %userprofile%\AppData\Roaming\npm-cache)
+   - Remove node-sass from your project's node_modules dir
+   - Do npm install to reinstall node-sass
+   ```
+   [Thanks @gencay](https://github.com/gencay) :white_heart:	
+     
+  - If you have building errors with Python -> check this line `build_flags = !python scripts/platformio/get_version.py -DMQTT_DEBUG -Idist` in **platformio.ini** and change with valid python version like: `build_flags = !python3 scripts/platformio/get_version.py -DMQTT_DEBUG -Idist`
  
- Error: sass-loader requires node-sass >=4 but node-sass is already at v4
+## TODO LIST
+ :hourglass_flowing_sand:	Update README regularly.
  
- This solution:
-- Remove the node-sass from global npm-cache (For Windows users %userprofile%\AppData\Roaming\npm-cache)
-- Remove node-sass from your project's node_modules dir
-- Do npm install to reinstall node-sass
- 
- - #### Useful links:
- https://www.sitepoint.com/quick-tip-multiple-versions-node-nvm/
- https://github.com/sidoh/webpack_with_platformio
-
+ :rainbow: Optimise the Waveshare 7.5 inch BW screen support. (Add specific settings in the UI for [Waveshare boards with "clever" reset circuit:](https://forum.arduino.cc/t/terrible-trouble-with-an-waveshare-epaper-2-9-display/701670/3))  
+   
+ :rainbow: Add more time zones.  
+   
+ :rainbow:	Add battery information for battery powered devices.  
+   
+ :rainbow: Add option for static IP address in the UI.  
+   
+ :star:	More Soon...
+   
+ ## Useful links:
+ https://www.sitepoint.com/quick-tip-multiple-versions-node-nvm/  
+ https://forum.arduino.cc/t/terrible-trouble-with-an-waveshare-epaper-2-9-display/701670/3  
+ https://github.com/Xinyuan-LilyGO/LilyGo-T-Call-SIM800/issues/101  
+ https://github.com/sidoh/webpack_with_platformio  
 
 ------------
 
-# Information
+# e-Paper Templates Project Information
  
 <!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=2 orderedList=false} -->
 
