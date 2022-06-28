@@ -59,6 +59,10 @@ We need this because Waveshare 7.5inch BW screen is not showing anything if GxEP
  :rainbow: Optimise the Waveshare 7.5 inch BW screen support. (Add specific settings in the UI for [Waveshare boards with "clever" reset circuit:](https://forum.arduino.cc/t/terrible-trouble-with-an-waveshare-epaper-2-9-display/701670/3))  
    
  :rainbow: Add more time zones.  
+ 
+ :rainbow: Add more Fonts.
+   
+ :rainbow: Add Cyrillic support.  
    
  :rainbow:	Add battery information for battery powered devices.  
    
@@ -68,9 +72,15 @@ We need this because Waveshare 7.5inch BW screen is not showing anything if GxEP
    
  ## Useful links:
  https://www.sitepoint.com/quick-tip-multiple-versions-node-nvm/  
+ 
  https://forum.arduino.cc/t/terrible-trouble-with-an-waveshare-epaper-2-9-display/701670/3  
+ https://forum.arduino.cc/t/waveshare-e-paper-displays-with-spi/467865/2297  
+ https://forum.arduino.cc/t/issue-with-waveshare-7-5inch-e-ink-display-and-esp32-no-display/688793/2  
+ 
  https://github.com/Xinyuan-LilyGO/LilyGo-T-Call-SIM800/issues/101  
  https://github.com/sidoh/webpack_with_platformio  
+ https://blog.christophermullins.com/2019/11/14/webpack-with-arduino-and-platformio/
+ 
 
 ------------
 
