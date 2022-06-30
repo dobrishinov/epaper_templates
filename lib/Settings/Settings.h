@@ -161,6 +161,17 @@ public:
     {
       windowed_updatesString = (windowed_updates ? "true" : "false");
     }
+  );
+  persistentVar(
+    bool,
+    clever_reset,
+    false,
+    {
+      clever_reset = clever_resetString.equalsIgnoreCase("true");
+    },
+    {
+      clever_resetString = (clever_reset ? "true" : "false");
+    }
   )
 };
 

@@ -11,6 +11,11 @@ export default {
       "When enabled, update partial regions of the screen.  Only enable this if your display does not support partial updates.",
     transformer: x => x.toLowerCase() === "true"
   },
+  "display.clever_reset": {
+    "ui:help":
+      "Only enable this for Waveshare boards with \"clever\" reset switch. (GDEW075T7 7.5 B/W 800X480 [V2] need this!)",
+    transformer: x => x.toLowerCase() === "true"
+  },
   "power.sleep_mode": {
     "ui:help": (
       <ul className="mt-2">

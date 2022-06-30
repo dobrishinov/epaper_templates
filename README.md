@@ -12,6 +12,8 @@ Template-oriented driver for e-paper displays using Arduino.  Define a layout wi
  :heavy_check_mark:	Fix Waveshare 7.5 inch BW screen support.   
    
  :heavy_check_mark:	Fix the VSPI SPI pins mapping.  
+   
+ :heavy_check_mark: Optimise the Waveshare 7.5 inch BW screen support. (Add specific settings in the UI for [Waveshare boards with "clever" reset circuit](https://forum.arduino.cc/t/terrible-trouble-with-an-waveshare-epaper-2-9-display/701670/3))  
  
 ## :exclamation: IMPORTANT things which we need to keep in mind before trying to build the project (also in the original repo)
  - We need to setup NVM first (Link with more info: https://www.sitepoint.com/quick-tip-multiple-versions-node-nvm/)
@@ -54,9 +56,7 @@ We need this because Waveshare 7.5inch BW screen is not showing anything if GxEP
   - If you have building errors with Python -> check this line `build_flags = !python scripts/platformio/get_version.py -DMQTT_DEBUG -Idist` in **platformio.ini** and change with valid python version like: `build_flags = !python3 scripts/platformio/get_version.py -DMQTT_DEBUG -Idist`
  
 ## TODO LIST
- :hourglass_flowing_sand:	Update README regularly.
- 
- :rainbow: Optimise the Waveshare 7.5 inch BW screen support. (Add specific settings in the UI for [Waveshare boards with "clever" reset circuit:](https://forum.arduino.cc/t/terrible-trouble-with-an-waveshare-epaper-2-9-display/701670/3))  
+ :hourglass_flowing_sand:	Update README regularly.    
    
  :rainbow: Add more time zones.  
  

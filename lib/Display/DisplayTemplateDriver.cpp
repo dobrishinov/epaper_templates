@@ -24,7 +24,12 @@ DisplayTemplateDriver::DisplayTemplateDriver(
 }
 
 void DisplayTemplateDriver::init() {
-  display->init(115200, true, 2, false);
+  // We need to enabled Clever Reset option in the UI for Waveshare boards with "clever" reset circuit. (GDEW075T7 7.5 B/W 800X480 [V2] need this!)
+  if (settings.display.clever_reset) {
+    display->init(115200, true, 2, false);
+  } else {
+    display->init(115200);
+  }
   display->mirror(false);
 
   #if defined(ESP32)

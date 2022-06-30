@@ -12,8 +12,8 @@ export function CheckboxWidget({ value, onChange, label }) {
 
   return (
     <label className="react-switch">
-      <span>{label}</span>
       <Switch onChange={_onChange} checked={checked} />
+      <span>{label}</span>
     </label>
   )
 }
