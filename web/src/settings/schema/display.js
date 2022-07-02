@@ -35,7 +35,7 @@ export default (displayTypes) => ({
       default: false
     },
     "display.clever_reset": {
-      $id: "#/properties/display.windowed_updates",
+      $id: "#/properties/display.clever_reset",
       type: "boolean",
       title: "Waveshare boards with \"clever\" reset circuit",
       default: false
