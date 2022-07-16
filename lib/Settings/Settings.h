@@ -172,7 +172,7 @@ public:
     {
       clever_resetString = (clever_reset ? "true" : "false");
     }
-  )
+  );
 };
 
 class SystemSettings : public Configuration {
@@ -209,6 +209,20 @@ public:
   persistentIntVar(sleep_duration, 600);
   // in seconds
   persistentIntVar(awake_duration, 30);
+
+  persistentVar(
+    bool,
+    battery_mode,
+    false,
+    {
+      battery_mode = battery_modeString.equalsIgnoreCase("true");
+    },
+    {
+      battery_modeString = (battery_mode ? "true" : "false");
+    }
+  );
+  persistentIntVar(battery_adc_pin, EPD_DEFAULT_BATTERY_ADC_PIN);
+  persistentFloatVar(battery_conv_factor, EPD_DEFAULT_BATTERY_CONV_FACTOR);
 };
 
 class Settings : public RootConfiguration {

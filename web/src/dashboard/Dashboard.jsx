@@ -97,6 +97,7 @@ const SystemStatusCard = ({ settings, systemStatus, onReload }) => {
 
   const firmwareFile = useRef(null);
   const deepSleepActive = systemStatus && systemStatus["deep_sleep_active"];
+  const hasBattery = systemStatus && systemStatus["battery_voltage"];
 
   const onCancelSleep = useCallback((e) => {
     e.preventDefault();
@@ -201,6 +202,20 @@ const SystemStatusCard = ({ settings, systemStatus, onReload }) => {
 
             <h6>Free Heap</h6>
             <p>{Math.round(systemStatus["free_heap"] / 1024)} KiB</p>
+
+            {hasBattery ? (
+                <>
+                <h6>Battery Level</h6>
+                <p>{systemStatus["battery_level"]} %</p>
+    
+                <h6>Battery Voltage</h6>
+                <p>{systemStatus["battery_voltage"]} V</p>
+                </>
+              ) : (
+              <> 
+              </>
+              ) 
+            }
 
             <SleepStatus
               deepSleepActive={deepSleepActive}
@@ -316,10 +331,10 @@ export default (props) => {
   return (
     <Container className="dashboard">
       <Row>
-        <Col sm={5}>
+        <Col sm={6}>
           <DisplayStatusCard settings={settings} />
         </Col>
-        <Col sm={5}>
+        <Col sm={6}>
           <SystemStatusCard
             settings={settings}
             systemStatus={systemStatus}

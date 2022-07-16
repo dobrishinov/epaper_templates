@@ -29,6 +29,8 @@
 #include <Timezone.h>
 #include <WiFiManager.h>
 #include <WiFiUdp.h>
+#include <Pangodream_18650_CL.h>
+
 
 enum class WiFiState { CONNECTED, DISCONNECTED };
 
@@ -38,6 +40,9 @@ DisplayTemplateDriver* driver = NULL;
 EpaperWebServer* webServer = NULL;
 MqttClient* mqttClient = NULL;
 NTPClient* timeClient;
+
+// Battery Information
+Pangodream_18650_CL* batteryInfo;
 
 // Don't attempt to reconnect to wifi if we've never connected
 volatile bool hasConnected = false;
@@ -104,6 +109,14 @@ void initSleepSettings() {
   }
 }
 
+void initBatterySettings() {
+  if (batteryInfo) {
+    delete batteryInfo;
+    batteryInfo = NULL;
+  }
+  batteryInfo = new Pangodream_18650_CL(settings.power.battery_adc_pin, settings.power.battery_conv_factor, EPD_DEFAULT_BATTERY_READS);
+}
+
 void applySettings() {
   Serial.println(F("Applying settings"));
 
@@ -161,6 +174,7 @@ void applySettings() {
   }
 
   initSleepSettings();
+  initBatterySettings();
 
   // Only run this once.  Don't want to re-check this stuff when settings are
   // re-applied.
@@ -268,10 +282,16 @@ void loop() {
   if (timeClient != NULL && timeClient->update() && lastSecond != second()) {
     lastSecond = second();
     driver->updateVariable("timestamp", String(timeClient->getEpochTime()));
+    driver->updateVariable("formatted_time", String(timeClient->getFormattedTime()));
   }
 
   if (webServer) {
     webServer->handleClient();
+  }
+  
+  if (settings.power.battery_mode) {
+    driver->updateVariable("battery_voltage", String(batteryInfo->getBatteryVolts()));
+    driver->updateVariable("battery_level", String(batteryInfo->getBatteryChargeLevel()));
   }
 
   if (!suspendSleep && initialSleepMode == SleepMode::DEEP_SLEEP) {

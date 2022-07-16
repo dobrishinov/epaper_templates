@@ -44,4 +44,8 @@ extern "C" {
 #define EPD_DEFAULT_BUSY_PIN 7
 // Pins 34-39 don't have internal pull-up or pull-down resistors
 #define EPD_DEFAULT_SLEEP_OVERRIDE_PIN 25
+// Battery Info Variables
+#define EPD_DEFAULT_BATTERY_ADC_PIN 35
+#define EPD_DEFAULT_BATTERY_CONV_FACTOR 1.70
+#define EPD_DEFAULT_BATTERY_READS 20
 #endif

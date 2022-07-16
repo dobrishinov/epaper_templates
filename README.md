@@ -2,7 +2,7 @@
 
 Template-oriented driver for e-paper displays using Arduino.  Define a layout with a JSON template, and update the display by changing variables via a REST API or MQTT.
 
-## Changes in my fork
+## History of the changes in my fork
  :heavy_check_mark: Create Fork of epaper_templates. :heart:  
    
  :heavy_check_mark:	Build successfully the project.  
@@ -14,7 +14,26 @@ Template-oriented driver for e-paper displays using Arduino.  Define a layout wi
  :heavy_check_mark:	Fix the VSPI SPI pins mapping.  
    
  :heavy_check_mark: Optimise the Waveshare 7.5 inch BW screen support. (Add specific settings in the UI for [Waveshare boards with "clever" reset circuit](https://forum.arduino.cc/t/terrible-trouble-with-an-waveshare-epaper-2-9-display/701670/3))  
+   
+ :heavy_check_mark:	Added battery information for battery powered devices. (New variables names: "battery_voltage" or "battery_level". This variables is not showing in the Variables tab, but you can use it when you type it explicitly.) Added also new settings in the Power Tab. ("Show Battery Info", "Battery Measure Pin", "Battery Convert Factor")
+   
+ ## TODO LIST
+ :hourglass_flowing_sand:	Update README regularly.    
+   
+ :rainbow: Add more time zones.  
  
+ :rainbow: Add more Fonts.
+   
+ :rainbow: Add Cyrillic support.  
+   
+ :rainbow: Show System Variables (TRANSIENT_VARIABLES) in the Variables tab as read only.  
+
+ :rainbow: Add option to reset the network with a button and to start AP mode if we need to change the network.  
+   
+ :rainbow: Add option for static IP address in the UI.  
+   
+ :star:	More Soon...
+  
 ## :exclamation: IMPORTANT things which we need to keep in mind before trying to build the project (also in the original repo)
  - We need to setup NVM first (Link with more info: https://www.sitepoint.com/quick-tip-multiple-versions-node-nvm/)
  - I used NVM version '1.1.9' as a package control system for NPM.
@@ -54,21 +73,6 @@ We need this because Waveshare 7.5inch BW screen is not showing anything if GxEP
    [Thanks @gencay](https://github.com/gencay) :white_heart:	
      
   - If you have building errors with Python -> check this line `build_flags = !python scripts/platformio/get_version.py -DMQTT_DEBUG -Idist` in **platformio.ini** and change with valid python version like: `build_flags = !python3 scripts/platformio/get_version.py -DMQTT_DEBUG -Idist`
- 
-## TODO LIST
- :hourglass_flowing_sand:	Update README regularly.    
-   
- :rainbow: Add more time zones.  
- 
- :rainbow: Add more Fonts.
-   
- :rainbow: Add Cyrillic support.  
-   
- :rainbow:	Add battery information for battery powered devices.  
-   
- :rainbow: Add option for static IP address in the UI.  
-   
- :star:	More Soon...
    
  ## Useful links:
  https://www.sitepoint.com/quick-tip-multiple-versions-node-nvm/  

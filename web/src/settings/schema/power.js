@@ -58,10 +58,46 @@ export default {
       ],
       type: "string",
       default: "ALWAYS_ON"
-    }
+    },
+    "power.battery_mode": {
+      $id: "#/properties/power.battery_mode",
+      type: "boolean",
+      title: "Show Battery Information",
+      default: false
+    },
   },
-  required: ["power.sleep_mode"],
+  required: ["power.battery_mode", "power.sleep_mode"],
   dependencies: {
+    "power.battery_mode": {
+      oneOf: [
+        {
+          properties: {
+            "power.battery_mode": {
+              const: false
+            }
+          }
+        },
+        {
+          properties: {
+            "power.battery_mode": {
+              "const": true
+            },
+            "power.battery_adc_pin": {
+              $id: "#/properties/power.battery_adc_pin",
+              title: "Battery Measure Pin",
+              $ref: "#/definitions/pin"
+            },
+            "power.battery_conv_factor": {
+              $id: "#/properties/power.battery_conv_factor",
+              type: "number",
+              title: "Battery Convert Factor",
+              default: "1.70",
+              pattern: "^(.*)$"
+            }
+          }
+        }
+      ]
+    },
     "power.sleep_mode": {
       oneOf: [
         {

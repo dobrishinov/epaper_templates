@@ -2,7 +2,7 @@
 #include <VariableDictionary.h>
 
 const std::set<String> VariableDictionary::TRANSIENT_VARIABLES = {
-  "timestamp"
+  "timestamp", "formatted_time", "battery_voltage", "battery_level"
 };
 
 static const size_t MAX_VALUE_SIZE = 255;
