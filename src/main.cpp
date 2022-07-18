@@ -23,6 +23,12 @@
 #include <GxEPD2_BW.h>
 #include <GxEPD2_EPD.h>
 #include <GxEPD2_GFX.h>
+
+//We need this because Waveshare 7.5inch BW screen is not showing anything if GxEPD2_GFX is not enabled.
+#ifndef ENABLE_GxEPD2_GFX
+#define ENABLE_GxEPD2_GFX 1
+#endif
+
 #include <MqttClient.h>
 #include <NTPClient.h>
 #include <Settings.h>
