@@ -49,6 +49,8 @@ NTPClient* timeClient;
 
 // Battery Information
 Pangodream_18650_CL* batteryInfo;
+uint32_t refreshBatteryStatusInSeconds = EPD_DEFAULT_BATTERY_REFRESH_SECONDS;
+uint32_t refreshBatteryStatusLatestMillis = 0;
 
 // Don't attempt to reconnect to wifi if we've never connected
 volatile bool hasConnected = false;
@@ -287,19 +289,19 @@ void loop() {
 
   if (timeClient != NULL && timeClient->update() && lastSecond != second()) {
     lastSecond = second();
-    driver->updateVariable("timestamp", String(timeClient->getEpochTime()));
-    driver->updateVariable("formatted_time", String(timeClient->getFormattedTime()));
+    driver->updateVariable("timestamp", String(timeClient->getEpochTime()));  
+  }
+  
+  if (settings.power.battery_mode && millis() - refreshBatteryStatusLatestMillis > refreshBatteryStatusInSeconds) {
+    refreshBatteryStatusLatestMillis = millis();
+    driver->updateVariable("battery_voltage", String(batteryInfo->getBatteryVolts()));
+    driver->updateVariable("battery_level", String(batteryInfo->getBatteryChargeLevel()));
   }
 
   if (webServer) {
     webServer->handleClient();
   }
   
-  if (settings.power.battery_mode) {
-    driver->updateVariable("battery_voltage", String(batteryInfo->getBatteryVolts()));
-    driver->updateVariable("battery_level", String(batteryInfo->getBatteryChargeLevel()));
-  }
-
   if (!suspendSleep && initialSleepMode == SleepMode::DEEP_SLEEP) {
     if (digitalRead(settings.power.sleep_override_pin) == settings.power.sleep_override_value) {
       Serial.println(F("Sleep override pin was held.  Suspending deep sleep."));
