@@ -1,78 +1,78 @@
-#include <AsyncMqttClient.h>
-#include <TokenIterator.h>
-#include <EnvironmentConfig.h>
+// #include <AsyncMqttClient.h>
+// #include <TokenIterator.h>
+// #include <EnvironmentConfig.h>
 
-#ifndef _MQTT_CLIENT_H
-#define _MQTT_CLIENT_H
+// #ifndef _MQTT_CLIENT_H
+// #define _MQTT_CLIENT_H
 
-#define MQTT_TOPIC_VARIABLE_NAME_TOKEN "variable_name"
+// #define MQTT_TOPIC_VARIABLE_NAME_TOKEN "variable_name"
 
-#ifndef MQTT_CONNECTION_ATTEMPT_FREQUENCY
-#define MQTT_CONNECTION_ATTEMPT_FREQUENCY 5000
-#endif
+// #ifndef MQTT_CONNECTION_ATTEMPT_FREQUENCY
+// #define MQTT_CONNECTION_ATTEMPT_FREQUENCY 5000
+// #endif
 
-class MqttClient {
-public:
-  typedef std::function<void(const String&, const String&)> TVariableUpdateFn;
+// class MqttClient {
+// public:
+//   typedef std::function<void(const String&, const String&)> TVariableUpdateFn;
 
-  MqttClient(String domain, uint16_t port, String variableTopicPattern);
-  MqttClient(
-    String domain,
-    uint16_t port,
-    String variableTopicPattern,
-    String username,
-    String password,
-    String clientStatusTopic
-  );
-  ~MqttClient();
+//   MqttClient(String domain, uint16_t port, String variableTopicPattern);
+//   MqttClient(
+//     String domain,
+//     uint16_t port,
+//     String variableTopicPattern,
+//     String username,
+//     String password,
+//     String clientStatusTopic
+//   );
+//   ~MqttClient();
 
-  void begin();
-  void onVariableUpdate(TVariableUpdateFn fn);
-  void updateStatus(const char* status);
+//   void begin();
+//   void onVariableUpdate(TVariableUpdateFn fn);
+//   void updateStatus(const char* status);
 
-  static const char* CONNECTED_STATUS;
-  static const char* DISCONNECTED_STATUS;
-  static const char* STATUS_VARIABLE;
+//   static const char* CONNECTED_STATUS;
+//   static const char* DISCONNECTED_STATUS;
+//   static const char* STATUS_VARIABLE;
 
-private:
-  AsyncMqttClient mqttClient;
-  #if defined(ESP8266)
-  Ticker reconnectTimer;
-  static void internalCallback(MqttClient* client);
-  #elif defined(ESP32)
-  TimerHandle_t reconnectTimer;
-  static void internalCallback(TimerHandle_t xTimer);
-  #endif
+// private:
+//   AsyncMqttClient mqttClient;
+//   #if defined(ESP8266)
+//   Ticker reconnectTimer;
+//   static void internalCallback(MqttClient* client);
+//   #elif defined(ESP32)
+//   TimerHandle_t reconnectTimer;
+//   static void internalCallback(TimerHandle_t xTimer);
+//   #endif
 
-  uint16_t port;
-  String domain;
-  String username;
-  String password;
-  char clientName[30];
+//   uint16_t port;
+//   String domain;
+//   String username;
+//   String password;
+//   char clientName[30];
 
-  unsigned long lastConnectAttempt;
-  TVariableUpdateFn variableUpdateCallback;
+//   unsigned long lastConnectAttempt;
+//   TVariableUpdateFn variableUpdateCallback;
 
-  // This will get reused a bunch.  Allows us to avoid copying into a buffer
-  // every time a message is received.
-  String topicPattern;
-  char* topicPatternBuffer;
-  TokenIterator* topicPatternTokens;
-  String clientStatusTopic;
+//   // This will get reused a bunch.  Allows us to avoid copying into a buffer
+//   // every time a message is received.
+//   String topicPattern;
+//   char* topicPatternBuffer;
+//   TokenIterator* topicPatternTokens;
+//   String clientStatusTopic;
 
-  void connect();
+//   void connect();
 
-  void onWifiConnected();
-  void messageCallback(
-    char* topic,
-    char* payload,
-    AsyncMqttClientMessageProperties properties,
-    size_t len,
-    size_t index,
-    size_t total
-  );
-  void connectCallback(bool sessionPresent);
-  void disconnectCallback(AsyncMqttClientDisconnectReason reason);
-};
+//   void onWifiConnected();
+//   void messageCallback(
+//     char* topic,
+//     char* payload,
+//     AsyncMqttClientMessageProperties properties,
+//     size_t len,
+//     size_t index,
+//     size_t total
+//   );
+//   void connectCallback(bool sessionPresent);
+//   void disconnectCallback(AsyncMqttClientDisconnectReason reason);
+// };
 
-#endif
+// #endif

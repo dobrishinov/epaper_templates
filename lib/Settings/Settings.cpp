@@ -2,8 +2,7 @@
 #include <FS.h>
 
 #define PORT_POSITION(s) ( s.indexOf(':') )
-
-String MqttSettings::serverHost() const {
+String NodeRedRestAPISettings::serverHost() const {
   int pos = PORT_POSITION(server);
 
   if (pos == -1) {
@@ -13,15 +12,35 @@ String MqttSettings::serverHost() const {
   }
 }
 
-uint16_t MqttSettings::serverPort() const {
+uint16_t NodeRedRestAPISettings::serverPort() const {
   int pos = PORT_POSITION(server);
 
   if (pos == -1) {
-    return DEFAULT_MQTT_PORT;
+    return DEFAULT_NODERED_PORT;
   } else {
     return atoi(server.c_str() + pos + 1);
   }
 }
+
+// String MqttSettings::serverHost() const {
+//   int pos = PORT_POSITION(server);
+
+//   if (pos == -1) {
+//     return server;
+//   } else {
+//     return server.substring(0, pos);
+//   }
+// }
+
+// uint16_t MqttSettings::serverPort() const {
+//   int pos = PORT_POSITION(server);
+
+//   if (pos == -1) {
+//     return DEFAULT_MQTT_PORT;
+//   } else {
+//     return atoi(server.c_str() + pos + 1);
+//   }
+// }
 
 bool WebSettings::isAuthenticationEnabled() const {
   return admin_username.length() > 0 && admin_password.length() > 0;

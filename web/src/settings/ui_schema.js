@@ -43,7 +43,7 @@ export default {
   "power.battery_conv_factor": {
     "ui:help": <>
     <div>
-    "Convertion factor for analog read units to volts. (Default: 1.70)
+    Convertion factor for analog read units to volts. (Default: 1.70)
     </div>
     <div class="warning">
       <MemoizedFontAwesomeIcon icon={faExclamationTriangle} className="text-warning fa-fw mr-1" />
@@ -75,9 +75,9 @@ export default {
   "power.sleep_override_value": {
     "ui:help": "The value Sleep Override Pin must be held to in order to suspend deep sleep."
   },
-  "mqtt.password": {
-    "ui:widget": "password"
-  },
+  // "mqtt.password": {
+  //   "ui:widget": "password"
+  // },
   "web.admin_password": {
     "ui:widget": "password"
   },
@@ -114,7 +114,54 @@ export default {
   "web.port": {
     transformer: parseInt
   },
-  "mqtt.client_status_topic": {
-    "ui:help": "If provided, MQTT birth and LWT messages will be published to this topic."
-  }
+  // "mqtt.client_status_topic": {
+  //   "ui:help": "If provided, MQTT birth and LWT messages will be published to this topic."
+  // }
+  "nodeRed.password": {
+    "ui:widget": "password"
+  },
+  "nodeRed.server": {
+    "ui:help": <>
+    <div>
+    Node-RED Server IP Address (Example: 192.168.1.100 or 192.168.1.100:PORT)
+    </div>
+    <div class="warning">
+      <MemoizedFontAwesomeIcon icon={faExclamationTriangle} className="text-warning fa-fw mr-1" />
+      <b>Default port is 1880</b>
+    </div>
+    </>
+  },
+  "nodeRed.endpoint_url": {
+    "ui:help": <>
+    <div>
+    Put your NODE-RED HTTP Endpoint here. (Example: /endpoint/test)
+    </div>
+    <div class="warning">
+      <MemoizedFontAwesomeIcon icon={faExclamationTriangle} className="text-warning fa-fw mr-1" />
+      <b>You need to create HTTP response node with Method: POST in Node-RED</b>
+    </div>
+    </>
+  },
+  "nodeRed.wake_up_keyword": {
+    "ui:help": <>
+    <div>
+    Example: AWAKE
+    </div>
+    <div class="warning">
+      <MemoizedFontAwesomeIcon icon={faExclamationTriangle} className="text-warning fa-fw mr-1" />
+      <b>We need this Wakeup word to trigger our Node-RED flow on device wakeup.</b>
+    </div>
+    </>
+  },
+  "nodeRed.sleep_keyword": {
+    "ui:help": <>
+    <div>
+    Example: SLEEP
+    </div>
+    <div class="warning">
+      <MemoizedFontAwesomeIcon icon={faExclamationTriangle} className="text-warning fa-fw mr-1" />
+      <b>We need this Sleep word to trigger some Node-RED flow on device Sleep.</b>
+    </div>
+    </>
+  },
 };

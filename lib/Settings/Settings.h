@@ -43,28 +43,43 @@ static const char BITMAP_METADATA_DIRECTORY[] = "/m";
 #define JSON_TEMPLATE_BUFFER_SIZE 20048
 #endif
 
-#ifndef MILIGHT_MAX_STALE_MQTT_GROUPS
-#define MILIGHT_MAX_STALE_MQTT_GROUPS 10
-#endif
+//#ifndef MILIGHT_MAX_STALE_MQTT_GROUPS
+//#define MILIGHT_MAX_STALE_MQTT_GROUPS 10
+//#endif
 
 #define SETTINGS_FILE  "/config.json"
 #define SETTINGS_TERMINATOR '\0'
 
-#define DEFAULT_MQTT_PORT 1883
+//#define DEFAULT_MQTT_PORT 1883
+
+#define DEFAULT_NODERED_PORT 1880
 
 static const char DEFAULT_DISPLAY_NAME[] = "epaper-display";
 
-class MqttSettings : public Configuration {
+class NodeRedRestAPISettings : public Configuration {
 public:
   persistentStringVar(username, "");
   persistentStringVar(password, "");
   persistentStringVar(server, "");
-  persistentStringVar(variables_topic_pattern, "");
-  persistentStringVar(client_status_topic, "")
+  persistentStringVar(endpoint_url, "");
+  persistentStringVar(wake_up_keyword, "");
+  persistentStringVar(sleep_keyword, "");
 
   String serverHost() const;
   uint16_t serverPort() const;
 };
+
+// class MqttSettings : public Configuration {
+// public:
+//   persistentStringVar(username, "");
+//   persistentStringVar(password, "");
+//   persistentStringVar(server, "");
+//   persistentStringVar(variables_topic_pattern, "");
+//   persistentStringVar(client_status_topic, "")
+
+//   String serverHost() const;
+//   uint16_t serverPort() const;
+// };
 
 class WebSettings : public Configuration {
 public:
@@ -232,7 +247,8 @@ public:
   subconfig(NetworkSettings, network);
   subconfig(HardwareSettings, hardware);
   subconfig(WebSettings, web);
-  subconfig(MqttSettings, mqtt);
+  subconfig(NodeRedRestAPISettings, nodeRed);
+  //subconfig(MqttSettings, mqtt);
   subconfig(PowerSettings, power);
 
   void save();

@@ -11,14 +11,15 @@ const createSchema = definition => ({
 
 import display from "./display";
 import hardware from "./hardware";
-import mqtt from "./mqtt";
+//import mqtt from "./mqtt";
+import nodeRed from "./nodeRed";
 import network from "./network";
 import system from "./system";
 import web from "./web";
 import power from "./power";
 
 const schemaBuilder = ({ displayTypes }) => {
-  return [display(displayTypes), hardware, mqtt, network, power, system, web].map(x => ({
+  return [display(displayTypes), hardware, /*mqtt,*/ network, power, system, web, nodeRed].map(x => ({
     ...x,
     schema: createSchema(x)
   }));

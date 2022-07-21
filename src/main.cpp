@@ -29,22 +29,24 @@
 #define ENABLE_GxEPD2_GFX 1
 #endif
 
-#include <MqttClient.h>
+//#include <MqttClient.h>
 #include <NTPClient.h>
 #include <Settings.h>
 #include <Timezone.h>
 #include <WiFiManager.h>
 #include <WiFiUdp.h>
 #include <Pangodream_18650_CL.h>
-
+#include <HTTPClient.h>
 
 enum class WiFiState { CONNECTED, DISCONNECTED };
+
+enum class DeviceStatus { AWAKE, SLEEP };
 
 Settings settings;
 GxEPD2_GFX* display = NULL;
 DisplayTemplateDriver* driver = NULL;
 EpaperWebServer* webServer = NULL;
-MqttClient* mqttClient = NULL;
+//MqttClient* mqttClient = NULL;
 NTPClient* timeClient;
 
 // Battery Information
@@ -147,24 +149,24 @@ void applySettings() {
         settings.network.wifi_password.c_str());
   }
 
-  if (mqttClient != NULL) {
-    delete mqttClient;
-    mqttClient = NULL;
-  }
+  // if (mqttClient != NULL) {
+  //   delete mqttClient;
+  //   mqttClient = NULL;
+  // }
 
-  if (settings.mqtt.serverHost().length() > 0) {
-    mqttClient = new MqttClient(settings.mqtt.serverHost(),
-        settings.mqtt.serverPort(),
-        settings.mqtt.variables_topic_pattern,
-        settings.mqtt.username,
-        settings.mqtt.password,
-        settings.mqtt.client_status_topic);
-    mqttClient->onVariableUpdate(
-        [](const String& variable, const String& value) {
-          driver->updateVariable(variable, value);
-        });
-    mqttClient->begin();
-  }
+  // if (settings.mqtt.serverHost().length() > 0) {
+  //   mqttClient = new MqttClient(settings.mqtt.serverHost(),
+  //       settings.mqtt.serverPort(),
+  //       settings.mqtt.variables_topic_pattern,
+  //       settings.mqtt.username,
+  //       settings.mqtt.password,
+  //       settings.mqtt.client_status_topic);
+  //   mqttClient->onVariableUpdate(
+  //       [](const String& variable, const String& value) {
+  //         driver->updateVariable(variable, value);
+  //       });
+  //   mqttClient->begin();
+  // }
 
   if (settings.display.template_name.length() > 0) {
     driver->setTemplate(settings.display.template_name);
@@ -193,11 +195,54 @@ void applySettings() {
   initialized = true;
 }
 
+// Update the REST Endpoint resource with information regarding the device state -> AWAKE or SLEEP
+void updateRestEndpointDeviceStatus(DeviceStatus status){
+
+  if (settings.nodeRed.serverHost().length() > 0 &&
+      settings.nodeRed.endpoint_url.length() > 0 &&
+      settings.nodeRed.wake_up_keyword.length() > 0 &&
+      settings.nodeRed.sleep_keyword.length() > 0) {
+
+    HTTPClient http;
+    // Create endpoint URL
+    String endpoint = "http://" + settings.nodeRed.serverHost() + 
+                            ":" + settings.nodeRed.serverPort() +
+                                  settings.nodeRed.endpoint_url;
+    Serial.println(endpoint);
+    http.begin(endpoint);
+
+    if(settings.nodeRed.username.length() > 0 &&
+       settings.nodeRed.password.length() > 0) {
+      // Set Authorization if we have Username and Password  
+      http.setAuthorization(settings.nodeRed.username.c_str(), settings.nodeRed.password.c_str());
+    }
+
+    // Specify content-type header
+    http.addHeader("Content-Type", "text/plain");
+    
+    const String httpRequestData =
+      status == DeviceStatus::AWAKE ? settings.nodeRed.wake_up_keyword : settings.nodeRed.sleep_keyword;
+
+    // Send HTTP POST request
+    int httpResponseCode = http.POST(httpRequestData);
+    Serial.print("HTTP Response code: ");
+    Serial.println(httpResponseCode);
+
+    // Free resources
+    http.end();
+  }
+}
+
 void updateWiFiState(WiFiState state) {
   const char varName[] = "wifi_state";
   const String varValue =
       state == WiFiState::CONNECTED ? "connected" : "disconnected";
 
+  // Call REST API with awake keyword
+  if ((settings.nodeRed.serverHost().length() > 0) && varValue == "connected"){
+    updateRestEndpointDeviceStatus(DeviceStatus::AWAKE);
+  }
+  
   driver->updateVariable(varName, varValue);
 }
 
@@ -310,6 +355,11 @@ void loop() {
       Serial.printf_P(
           PSTR("Wake duration expired.  Going to sleep for %d seconds...\n"),
           settings.power.sleep_duration);
+      
+      // Call REST API with sleep keyword
+      if (settings.nodeRed.serverHost().length() > 0) {
+        updateRestEndpointDeviceStatus(DeviceStatus::SLEEP);
+      }
       Serial.flush();
 
       // Make sure the display is off while we sleep
