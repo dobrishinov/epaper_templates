@@ -49,5 +49,60 @@ export default {
       examples: [""],
       pattern: "^(.*)$"
     },
+    "network.static_ip_mode": {
+      $id: "#/properties/network.static_ip_mode",
+      type: "boolean",
+      title: "Set Static IP Address",
+      default: false
+    },
+  },
+  required: ["network.static_ip_mode"],
+  dependencies: {
+    "network.static_ip_mode": {
+      oneOf: [
+        {
+          properties: {
+            "network.static_ip_mode": {
+              const: false
+            }
+          }
+        },
+        {
+          properties: {
+            "network.static_ip_mode": {
+              "const": true
+            },
+            "network.static_ip": {
+              $id: "#/properties/network.static_ip",
+              type: "string",
+              title: "Static IP",
+              examples: [""],
+              pattern: "^(.*)$"
+            },
+            "network.gateway": {
+              $id: "#/properties/network.gateway",
+              type: "string",
+              title: "Gateway",
+              examples: [""],
+              pattern: "^(.*)$"
+            },
+            "network.subnet": {
+              $id: "#/properties/network.subnet",
+              type: "string",
+              title: "Subnet",
+              examples: [""],
+              pattern: "^(.*)$"
+            },
+            "network.dns": {
+              $id: "#/properties/network.dns",
+              type: "string",
+              title: "DNS",
+              examples: [""],
+              pattern: "^(.*)$"
+            },
+          }
+        }
+      ]
+    },
   }
 };

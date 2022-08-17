@@ -130,12 +130,27 @@ public:
 
 class NetworkSettings : public Configuration {
 public:
+  persistentStringVar(static_ip, "");
+  persistentStringVar(gateway, "");
+  persistentStringVar(subnet, "");
+  persistentStringVar(dns, "");
   persistentStringVar(hostname, DEFAULT_DISPLAY_NAME);
   persistentStringVar(mdns_name, DEFAULT_DISPLAY_NAME);
   persistentStringVar(ntp_server, "pool.ntp.org");
   persistentStringVar(setup_ap_password, "waveshare");
   persistentStringVar(wifi_ssid, "");
   persistentStringVar(wifi_password, "");
+  persistentVar(
+    bool,
+    static_ip_mode,
+    false,
+    {
+      static_ip_mode = static_ip_modeString.equalsIgnoreCase("true");
+    },
+    {
+      static_ip_modeString = (static_ip_mode ? "true" : "false");
+    }
+  );
 };
 
 class DisplaySettings : public Configuration {

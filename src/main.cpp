@@ -244,6 +244,7 @@ void updateWiFiState(WiFiState state) {
   }
   
   driver->updateVariable(varName, varValue);
+  driver->updateVariable("ip_address", WiFi.localIP().toString());
 }
 
 #if defined(ESP32)
@@ -308,6 +309,18 @@ void setup() {
   WiFi.setAutoReconnect(true);
   WiFi.onEvent(onWifiEvent);
 #endif
+  // When static ip is enabled in the menu, this logic will be executed to set static ip for the device
+  if (settings.network.static_ip_mode) {
+    IPAddress ipAddress;
+    ipAddress.fromString(settings.network.static_ip.c_str());
+    IPAddress gateway;
+    gateway.fromString(settings.network.gateway.c_str());
+    IPAddress subnet;
+    subnet.fromString(settings.network.subnet.c_str());
+    IPAddress dns;
+    dns.fromString(settings.network.dns.c_str());
+    WiFi.config(ipAddress, gateway, subnet, dns);
+  }
 
   char setupSsid[20];
   sprintf(setupSsid, "epaper_%d", ESP_CHIP_ID());

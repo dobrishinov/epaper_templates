@@ -81,6 +81,14 @@ export default {
   "web.admin_password": {
     "ui:widget": "password"
   },
+  "network.static_ip_mode": {
+    "ui:help": <>
+    <div>
+      Set Static IP address
+    </div>
+    </>,
+    transformer: x => x.toLowerCase() === "true"
+  },
   "network.wifi_password": {
     "ui:widget": "password"
   },

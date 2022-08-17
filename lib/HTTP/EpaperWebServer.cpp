@@ -370,6 +370,7 @@ void EpaperWebServer::handleGetSystem(RequestContext& request) {
   request.response.json["sdk_version"] = ESP.getSdkVersion();
   request.response.json["uptime"] = millis();
   request.response.json["deep_sleep_active"] = this->deepSleepActive;
+  request.response.json["ip_address"] = WiFi.localIP();
   request.response.json["battery_voltage"] = driver->getVariable("battery_voltage");
   request.response.json["battery_level"] = driver->getVariable("battery_level");
 }
