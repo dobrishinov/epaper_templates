@@ -36,11 +36,15 @@ const std::map<const char*, GxEPD2::Panel, cmp_str> DisplayTypeHelpers::PANELS_B
   { "GDEW042Z15", GxEPD2::Panel::GDEW042Z15 },
   { "GDEW0583T7", GxEPD2::Panel::GDEW0583T7 },
   { "GDEW0583Z21", GxEPD2::Panel::GDEW0583Z21 },
-  { "ED060SCT", GxEPD2::Panel::ED060SCT },
+  // Commented to save program space
+  //{ "ED060SCT", GxEPD2::Panel::ED060SCT },
   { "GDEW075T8", GxEPD2::Panel::GDEW075T8 },
   { "GDEW075T7", GxEPD2::Panel::GDEW075T7 },
   { "GDEW075Z09", GxEPD2::Panel::GDEW075Z09 },
-  { "GDEW075Z08", GxEPD2::Panel::GDEW075Z08 }
+  { "GDEW075Z08", GxEPD2::Panel::GDEW075Z08 },
+  // TODO To test this screens
+  //{ "Added [NEW] GDEM0213B74", GxEPD2::Panel::GDEM0213B74 },
+  //{ "Added [NEW] DEPG0213BN", GxEPD2::Panel::DEPG0213BN }
 };
 
 const std::map<const GxEPD2::Panel, const char*> DisplayTypeHelpers::PANEL_DESCRIPTIONS = {
@@ -62,11 +66,15 @@ const std::map<const GxEPD2::Panel, const char*> DisplayTypeHelpers::PANEL_DESCR
   { GxEPD2::Panel::GDEW042Z15, "4.2\" B/W/R" },
   { GxEPD2::Panel::GDEW0583T7, "5.83\" B/W" },
   { GxEPD2::Panel::GDEW0583Z21, "5.83\" B/W/R" },
-  { GxEPD2::Panel::ED060SCT, "6\" B/W" },
+  // Commented to save program space
+  //{ GxEPD2::Panel::ED060SCT, "6\" B/W" },
   { GxEPD2::Panel::GDEW075T8, "7.5\" B/W" },
   { GxEPD2::Panel::GDEW075T7, "7.5\" B/W 800X480" },
   { GxEPD2::Panel::GDEW075Z09, "7.5\" B/W/R" },
-  { GxEPD2::Panel::GDEW075Z08, "7.5\" B/W/R 800X480" }
+  { GxEPD2::Panel::GDEW075Z08, "7.5\" B/W/R 800X480" },
+  // TODO To test this screens
+  //{ GxEPD2::Panel::GDEM0213B74, "2.13\" B/W 128x250" },
+  //{ GxEPD2::Panel::DEPG0213BN, "2.13\" B/W 128x250, e.g. LILYGO® TTGO T5 V2.3.1" }
 };
 
 const std::map<const GxEPD2::Panel, const char*> DisplayTypeHelpers::PANEL_COLOR_SUPPORT = {
@@ -88,11 +96,15 @@ const std::map<const GxEPD2::Panel, const char*> DisplayTypeHelpers::PANEL_COLOR
   { GxEPD2::Panel::GDEW042Z15, "BWR"},
   { GxEPD2::Panel::GDEW0583T7, "BW"},
   { GxEPD2::Panel::GDEW0583Z21, "BWR"},
-  { GxEPD2::Panel::ED060SCT, "BW"},
+  // Commented to save program space
+  //{ GxEPD2::Panel::ED060SCT, "BW"},
   { GxEPD2::Panel::GDEW075T8, "BW"},
   { GxEPD2::Panel::GDEW075T7, "BW"},
   { GxEPD2::Panel::GDEW075Z09, "BWR"},
-  { GxEPD2::Panel::GDEW075Z08, "BWR"}
+  { GxEPD2::Panel::GDEW075Z08, "BWR"},
+  // TODO To test this screens
+  //{ GxEPD2::Panel::GDEM0213B74, "BW"},
+  //{ GxEPD2::Panel::DEPG0213BN, "BW"}
 };
 
 // Data generated with:
@@ -120,7 +132,11 @@ const std::map<const GxEPD2::Panel, std::pair<uint16_t, uint16_t>> DisplayTypeHe
   { GxEPD2::Panel::GDEW0583Z21, std::make_pair<uint16_t, uint16_t>(600,448) },
   { GxEPD2::Panel::GDEW075Z09, std::make_pair<uint16_t, uint16_t>(640,384) },
   { GxEPD2::Panel::GDEW075Z08, std::make_pair<uint16_t, uint16_t>(800,480) },
-  { GxEPD2::Panel::ED060SCT, std::make_pair<uint16_t, uint16_t>(600, 800) },
+  // Commented to save program space
+  //{ GxEPD2::Panel::ED060SCT, std::make_pair<uint16_t, uint16_t>(600, 800) },
+  // TODO To test this screens
+  //{ GxEPD2::Panel::GDEM0213B74, std::make_pair<uint16_t, uint16_t>(128, 250) },
+  //{ GxEPD2::Panel::DEPG0213BN, std::make_pair<uint16_t, uint16_t>(128, 250) },
 };
 
 const GxEPD2::Panel DisplayTypeHelpers::DEFAULT_PANEL = GxEPD2::Panel::GDEW042T2;
@@ -193,10 +209,17 @@ GxEPD2_GFX* DisplayTypeHelpers::buildDisplay(GxEPD2::Panel type, uint8_t dc, uin
       return __gxepd2_build_bw_driver<GxEPD2_371>(dc, rst, busy, ss);
     case GxEPD2::Panel::GDEW075T7:
       return __gxepd2_build_bw_driver<GxEPD2_750_T7>(dc, rst, busy, ss);
+  // Commented to save program space
+    //case GxEPD2::Panel::ED060SCT:
+      //return __gxepd2_build_bw_driver<GxEPD2_it60>(dc, rst, busy, ss);
+    
+    // TODO To test this screens
+    //case GxEPD2::Panel::GDEM0213B74:
+      //return __gxepd2_build_bw_driver<GxEPD2_213_B74>(dc, rst, busy, ss);
+    //case GxEPD2::Panel::DEPG0213BN:
+      //return __gxepd2_build_bw_driver<GxEPD2_213_BN>(dc, rst, busy, ss);
 
     // Color displays
-    case GxEPD2::Panel::ED060SCT:
-      return __gxepd2_build_3c_driver<GxEPD2_it60>(dc, rst, busy, ss);
     case GxEPD2::Panel::GDEW0154Z04:
       return __gxepd2_build_3c_driver<GxEPD2_154c>(dc, rst, busy, ss);
     case GxEPD2::Panel::GDEW0213Z16:
